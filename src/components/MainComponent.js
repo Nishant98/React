@@ -8,8 +8,9 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreators'
 
-//map redux store state into props that will be available to the component by connecting this component to Redux store (wrap the component inside connect)
+// map redux store state into props that will be available to the component by connecting this component to Redux store (wrap the component inside connect)
 const mapStateToProps = state => {
     return{
       dishes: state.dishes,
@@ -18,6 +19,11 @@ const mapStateToProps = state => {
       leaders: state.leaders
     }         
 }
+
+// receives dispatch as a parameter, addComment is a property that takes 4 parameter and dispatches the action (ActionCreator gives the object that is passed to dispatch)
+const mapDispatchToProps = (dispatch) => ({
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
 
 class Main extends Component {
 
@@ -52,6 +58,7 @@ class Main extends Component {
       return(
           <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
             comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+            addComment={this.props.addComment }
           />  
       );
     }
@@ -75,6 +82,6 @@ class Main extends Component {
   }
 }
 
-// connect takes mapStateToProps as a parameter, also takes mapDispatchToProps
+// connect takes mapStateToProps as a parameter, also takes mapDispatchToProps and makes them available in react component.
 // if using react router, then we have to surrond connect with "withRouter"
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
