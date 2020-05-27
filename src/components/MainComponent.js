@@ -9,6 +9,7 @@ import Home from './HomeComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addComment, fetchDishes } from '../redux/ActionCreators'
+import { actions } from 'react-redux-form';
 
 // map redux store state into props that will be available to the component by connecting this component to Redux store (wrap the component inside connect)
 const mapStateToProps = state => {
@@ -23,7 +24,8 @@ const mapStateToProps = state => {
 // receives dispatch as a parameter, addComment is a property that takes 4 parameter and dispatches the action (ActionCreator gives the object that is passed to dispatch)
 const mapDispatchToProps = (dispatch) => ({
     addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-    fetchDishes:  () => {dispatch(fetchDishes())}
+    fetchDishes:  () => {dispatch(fetchDishes())},
+    resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
 });
 
 class Main extends Component {
@@ -80,7 +82,7 @@ class Main extends Component {
               <Route path="/home" component={HomePage} />
               <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
               <Route path="/menu/:dishId" component={DishWithId} />
-              <Route exact path="/contactus" component={Contact} />
+              <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
               <Route exact path="/aboutus" component={AboutPage} /> 
               <Redirect to="/home" />
           </Switch>
