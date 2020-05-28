@@ -40,7 +40,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
             console.log(values.rating);
             console.log(values.author);
             console.log(values.comment);
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
             // this.props.addComment("2","4","Nishant","Test Comment");
             // console.log(values);
          }
@@ -112,7 +112,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
     }
 
-    function RenderComments({comments, addComment, dishId}){
+    function RenderComments({comments, postComment, dishId}){
         if(comments!=null){
             const comment = comments.map((singleComment) => {
                 return(
@@ -137,7 +137,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div className="col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     {comment}
-                    <CommentForm dishId={dishId} addComment={addComment}/>
+                    <CommentForm dishId={dishId} postComment={postComment}/>
                 </div>            
             );
         }
@@ -185,7 +185,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     </div>
                     <div className="row">
                         <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id} />
+                        <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish.id} />
                     </div>
                 </div>
             );
