@@ -123,8 +123,8 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 return(
                     <div key={singleComment.id}>
                         <ul className="list-unstyled">
-                            {/* <Stagger in> */}
-                                {/* <Fade in> */}
+                            <Stagger in>
+                                <Fade in>
                                     <li>
                                         <p>{singleComment.comment}</p>
                                         <p>-- {singleComment.author},
@@ -136,8 +136,8 @@ const minLength = (len) => (val) => val && (val.length >= len);
                                         }).format(new Date(Date.parse(singleComment.date)))}
                                         </p>
                                     </li>
-                                {/* </Fade> */}
-                            {/* </Stagger> */}
+                                </Fade>
+                            </Stagger>
                         </ul>
                     </div>
                 );
