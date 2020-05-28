@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 // checks that the values is >0
 const required = (val) => val && val.length;
@@ -95,13 +96,17 @@ const minLength = (len) => (val) => val && (val.length >= len);
         if(dish!=null){
             return(
                 <div className="col-12 col-md-5 m-1">
-                    <Card>
-                        <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+                    <FadeTransform in transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                        }}>
+                        <Card>
+                            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                            <CardBody>
+                                <CardTitle>{dish.name}</CardTitle>
+                                <CardText>{dish.description}</CardText>
+                            </CardBody>
+                        </Card>
+                    </FadeTransform>
                 </div>
             )
         }
@@ -118,17 +123,21 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 return(
                     <div key={singleComment.id}>
                         <ul className="list-unstyled">
-                            <li>
-                                <p>{singleComment.comment}</p>
-                                <p>-- {singleComment.author},
-                                &nbsp;
-                                {new Intl.DateTimeFormat('en-US', {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                }).format(new Date(Date.parse(singleComment.date)))}
-                                </p>
-                            </li>
+                            {/* <Stagger in> */}
+                                {/* <Fade in> */}
+                                    <li>
+                                        <p>{singleComment.comment}</p>
+                                        <p>-- {singleComment.author},
+                                        &nbsp;
+                                        {new Intl.DateTimeFormat('en-US', {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        }).format(new Date(Date.parse(singleComment.date)))}
+                                        </p>
+                                    </li>
+                                {/* </Fade> */}
+                            {/* </Stagger> */}
                         </ul>
                     </div>
                 );
